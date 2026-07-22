@@ -9,6 +9,7 @@ add_requires("cli11")
 target("qsort")
     set_kind("binary")
     add_files("src/*.cpp")
+    set_toolset("cxx", "clang++")
     add_includedirs("include")
 
     add_packages("cli11")
