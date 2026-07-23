@@ -7,14 +7,14 @@
 #include "header.h"
 
 int main(int argc, char **argv) {
-    CLI::App qsort{"demo"};
+    CLI::App qsort{"qsort - simple sorting programm for Linux"};
 
     std::string where_option;
-    qsort.add_option("-w, --where", where_option, "");
+    qsort.add_option("-w, --where", where_option, "directory to sort");
     std::string type_option;
-    qsort.add_option("-t, --type", type_option, "");
+    qsort.add_option("-t, --type", type_option, "types to sort (date, ext or name)");
     std::string df_option; // df = distinctive feature
-    qsort.add_option("-df, --distinctive_feature", df_option, "");
+    qsort.add_option("-df, --distinctive_feature", df_option, "distinctive feature to sort (like date or file extension)");
 
     CLI11_PARSE(qsort, argc, argv);
 
