@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <functional>
+#include <filesystem>
 #include "header.h"
 
 int main(int argc, char **argv) {
@@ -17,13 +18,13 @@ int main(int argc, char **argv) {
 
     CLI11_PARSE(qsort, argc, argv);
 
-    if(where_option.find("/") == std::string::npos) {
-        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "/correct/path/ is acceptable, unknown path" << std::endl;
+    if(!where_option.is_directory()) {
+        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "path is not a directory, unknown path" << std::endl;
         return 0; // return 1 gonna return 'unknown error', so it's 0 for correct returning
     }
     if(df_option.empty()) {
         std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "distinctive feature is empty, unknown distinctive feature";
-        return 0;
+        return 0; // return 1 gonna return 'unknown error', so it's 0 for correct returning
     } 
 
     std::unordered_map<std::string, std::function<void()>> actions = {
