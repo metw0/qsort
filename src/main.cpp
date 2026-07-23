@@ -12,13 +12,19 @@ int main(int argc, char **argv) {
     qsort.add_option("-w, --where", where_option, "");
     std::string type_option;
     qsort.add_option("-t, --type", type_option, "");
+    std::string df_option; // df = distinctive feature
+    qsort.add_option("-df, --distinctive_feature", df_option, "");
 
     CLI11_PARSE(qsort, argc, argv);
 
     if(where_option.find("/") == std::string::npos) {
-        std::cout << ansi::BOLD_RED << "error: " << ansi::RESET << "/correct/path/ is acceptable, unknown path" << std::endl;
+        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "/correct/path/ is acceptable, unknown path" << std::endl;
         return 0; // return 1 gonna return 'unknown error', so it's 0 for correct returning
     }
+    if(df_option.empty()) {
+        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "distinctive feature is empty, unknown distinctive feature";
+        return 0;
+    } 
 
     std::unordered_map<std::string, std::function<void()>> actions = {
         {"date", []() {/* some code */}},
@@ -30,7 +36,7 @@ int main(int argc, char **argv) {
     if(it != actions.end()) {
         it->second();
     } else {
-        std::cout << ansi::BOLD_RED << "error: " << ansi::RESET << "types date, ext or name is acceptable, unknown type" << std::endl;
+        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "types date, ext or name is acceptable, unknown type" << std::endl;
         return 0; // return 1 gonna return 'unknown error', so it's 0 for correct returning
     }
 
