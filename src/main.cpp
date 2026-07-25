@@ -13,12 +13,12 @@ int main(int argc, char **argv) {
     qsort.add_option("-w, --where", where_option, "directory to sort");
     std::string type_option;
     qsort.add_option("-t, --type", type_option, "types to sort (date, ext or name)");
-    std::string df_option; // df = distinctive feature
-    qsort.add_option("-df, --distinctive_feature", df_option, "distinctive feature to sort (like date or file extension)");
+    std::string df_option; // d = distinctive feature
+    qsort.add_option("-d, --df", df_option, "distinctive feature to sort (like date or file extension)");
 
     CLI11_PARSE(qsort, argc, argv);
 
-    if(!where_option.is_directory()) {
+    if(!files::is_directory(files::path(where_option))) {
         std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "path is not a directory, unknown path" << std::endl;
         return 0; // return 1 gonna return 'unknown error', so it's 0 for correct returning
     }
@@ -28,9 +28,12 @@ int main(int argc, char **argv) {
     } 
 
     std::unordered_map<std::string, std::function<void()>> actions = {
-        {"date", []() {/* some code */}},
+        {"name", [where_option, df_option]() {
+            if(sort::name_sort(where_option, df_option) == 1) return 0; 
+            // return 1 gonna return 'unknown error', so it's 0 for correct returning
+        }},
         {"ext", []() {/* some code */}},
-        {"name", []() {/* some code */}}
+        {"date", []() {/* some code */}}
     };
 
     auto it = actions.find(type_option);
