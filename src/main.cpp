@@ -19,11 +19,13 @@ int main(int argc, char **argv) {
     CLI11_PARSE(qsort, argc, argv);
 
     if(!files::is_directory(files::path(where_option))) {
-        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "path is not a directory, unknown path" << std::endl;
+        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
+                  << "path is not a directory, unknown path" << std::endl;
         return 0; // return 1 gonna return 'unknown error', so it's 0 for correct returning
     }
     if(df_option.empty()) {
-        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "distinctive feature is empty, unknown distinctive feature";
+        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
+                  << "distinctive feature is empty, unknown distinctive feature";
         return 0; // return 1 gonna return 'unknown error', so it's 0 for correct returning
     } 
 
@@ -40,7 +42,8 @@ int main(int argc, char **argv) {
     if(it != actions.end()) {
         it->second();
     } else {
-        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "types date, ext or name is acceptable, unknown type" << std::endl;
+        std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
+                  << "types date, ext or name is acceptable, unknown type" << std::endl;
         return 0; // return 1 gonna return 'unknown error', so it's 0 for correct returning
     }
 

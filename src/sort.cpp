@@ -11,7 +11,8 @@ namespace sort {
     int name_sort(std::string path_str, std::string df_str) {
         const files::path path{path_str}; 
         if(!files::exists(path) && !files::create_directory(path)) {
-            std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET << "directory does not exist and unable to create it, unknown error";
+            std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
+                    << "directory does not exist and unable to create it, unknown error";
             return 1;
         }
 
