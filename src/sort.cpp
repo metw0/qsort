@@ -6,7 +6,6 @@
 /* 
 df is distinctive feature from main.cpp
 files is namespace of std::filesystem
-accept df in YYYY-MM-DD type
 */
 namespace sort {
     int name_sort(std::string path_str, std::string df_str) {
