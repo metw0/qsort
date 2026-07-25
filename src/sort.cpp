@@ -12,7 +12,7 @@ namespace sort {
         const files::path path{path_str}; 
         if(!files::exists(path) && !files::create_directory(path)) {
             std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
-                      << "directory does not exist and unable to create it";
+                      << "directory does not exist and unable to create it" << std::endl;
             return 1;
         }
 
@@ -30,7 +30,7 @@ namespace sort {
 
         if(!is_founded) {
             std::cerr << ansi::BOLD_YELLOW << "warning: " << ansi::RESET 
-                      << "there are no files that include df";
+                      << "there are no files that include " << df << std::endl;
             return 1;
         }
         return 0;
