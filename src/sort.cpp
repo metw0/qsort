@@ -5,16 +5,11 @@
 
 /* 
 df is distinctive feature from main.cpp
-files is namespace of std::filesystem
-*/
-namespace sort {
+files is namespace of std::filesystem */
+namespace sort {  
     int name_sort(std::string path_str, std::string df_str) {
         const files::path path{path_str}; 
-        if(!files::exists(path) && !files::create_directory(path)) {
-            std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
-                      << "directory does not exist and unable to create it" << std::endl;
-            return 1;
-        }
+        if(!sutils::check_exists(path)) return 1;
 
         bool is_founded = false;
         const std::string &df = df_str;
@@ -27,19 +22,12 @@ namespace sort {
             is_founded = true;
             files::rename(file.path(), path / file_name);
         }
-
-        if(!is_founded) {
-            std::cerr << ansi::BOLD_YELLOW << "warning: " << ansi::RESET 
-                      << "there are no files that include " << df << std::endl;
-            return 1;
-        }
+        if(!sutils::check_is_founded(is_founded, df)) return 1;
         return 0;
     }
-
     int ext_sort() {
         /* some code */
     }
-
     int date_sort() {
         /* some code */
     }
