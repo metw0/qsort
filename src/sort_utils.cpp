@@ -16,11 +16,20 @@ namespace sutils {
         return true;
     }
     bool check_is_founded(bool is_founded, const std::string &df) {
-        if(!is_founded) {
+        if(is_founded) return true;
+        if(df[0] != '.') {
             std::cerr << ansi::BOLD_YELLOW << "warning: " << ansi::RESET 
-                      << "there are no files that include " << df << std::endl;
+                      << "there are no files that include " << df << " in name" << std::endl;
+            return false;
+        } else {
+            std::cerr << ansi::BOLD_YELLOW << "warning: " << ansi::RESET 
+                      << "there are no files with ext " << df << std::endl;
             return false;
         }
-        return true;
+    }
+    std::string check_type(const std::string &df) {
+        if(df[0] == '.') return "ext";
+        else if(df.find("/")) return "date";
+        return "name";
     }
 }
