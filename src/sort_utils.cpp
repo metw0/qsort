@@ -5,6 +5,8 @@
 
 /* 
 sutils is short for sort_utils 
+chrono is namespace for std::chrono
+files is namespace for std::filesystem
 checks for sort.cpp */
 namespace sutils {
     bool check_exists(const files::path &path) {
@@ -15,15 +17,21 @@ namespace sutils {
         }
         return true;
     }
-    bool check_is_founded(bool is_founded, const std::string &df) {
+    bool check_is_founded(bool is_founded, const std::string &df, const std::string type) {
         if(is_founded) return true;
-        if(df[0] != '.') {
+        if(type == "name") {
             std::cerr << ansi::BOLD_YELLOW << "warning: " << ansi::RESET 
                       << "there are no files that include " << df << " in name" << std::endl;
             return false;
-        } else {
+        } 
+        if(type == "ext") {
             std::cerr << ansi::BOLD_YELLOW << "warning: " << ansi::RESET 
                       << "there are no files with ext " << df << std::endl;
+            return false;
+        }
+        if(type == "date") {
+            std::cerr << ansi::BOLD_YELLOW << "warning: " << ansi::RESET 
+                      << "there are no files with last write date " << df << std::endl;
             return false;
         }
     }
@@ -61,5 +69,20 @@ namespace sutils {
             }
             return true;
         }
+    }
+    /* path variable is path to file
+    */
+    std::string get_file_date(const files::path &path) {
+        auto ftime = files::last_write_time(path);
+        auto sctp = chrono::time_point_cast<chrono::system_clock::duration>(
+            ftime - files::file_time_type::clock::now() + chrono::system_clock::now()
+        );
+
+        std::time_t tt = std::chrono::system_clock::to_time_t(sctp);
+        std::tm* tm = std::localtime(&tt);
+
+        std::ostringstream oss;
+        oss << std::put_time(tm, "%Y-%m-%d");
+        return oss.str();
     }
 }

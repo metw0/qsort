@@ -31,7 +31,9 @@ int main(int argc, char **argv) {
         {"ext", [where_option, df_option]() -> int {
             return sort::ext_sort(where_option, df_option);
         }},
-        {"date", []() {/* some code */ return 0;}}
+        {"date", [where_option, df_option]() -> int {
+            return sort::date_sort(where_option, df_option);
+        }}
     };
 
     auto it = actions.find(type_option);
