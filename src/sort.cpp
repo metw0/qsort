@@ -10,13 +10,10 @@ namespace sort {
     int name_sort(std::string path_str, std::string df_str) {
         const files::path path{path_str}; 
         const std::string &df = df_str;
+        const std::string type = "name";
 
         if(!sutils::check_exists(path)) return 1;
-        if(sutils::check_type(df) != "name") {
-            std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
-                      << "wrong type for " << df << " df" << std::endl;
-            return 1;
-        }
+        if(!sutils::check_type(type, df)) return 1;
 
         bool is_founded = false;
         for(const auto &file : files::directory_iterator(files::current_path())) {
@@ -37,13 +34,10 @@ namespace sort {
     int ext_sort(std::string path_str, std::string df_str) {
         const files::path path{path_str}; 
         const std::string &df = df_str;
+        const std::string type = "ext";
 
         if(!sutils::check_exists(path)) return 1;
-        if(sutils::check_type(df) != "ext") {
-            std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
-                      << "wrong type for " << df << " df" << std::endl;
-            return 1;
-        }
+        if(!sutils::check_type(type, df)) return 1;
 
         bool is_founded = false;
         for(const auto &file : files::directory_iterator(files::current_path())) {

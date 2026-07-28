@@ -27,9 +27,39 @@ namespace sutils {
             return false;
         }
     }
-    std::string check_type(const std::string &df) {
-        if(df[0] == '.') return "ext";
-        else if(df.find("/")) return "date";
-        return "name";
+    /* starts_with_dot and has_dash were created for better readability
+    */
+    bool check_type(const std::string type, const std::string &df) {
+        bool starts_with_dot = (df[0] == '.');
+        bool has_dash = (df.find('-') != std::string::npos);
+
+        if(type == "name") return true;
+
+        if(type == "ext") {
+            if(!starts_with_dot) {
+                std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
+                          << "ext type must start with ." << std::endl;
+                return false;
+            }
+            if(has_dash) {
+                std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
+                          << "ext type cannot contain -" << std::endl;
+                return false;
+            }
+            return true;
+        }
+        if(type == "date") {
+            if(!has_dash) {
+                std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
+                          << "date type must contain -" << std::endl;
+                return false;
+            }
+            if(starts_with_dot) {
+                std::cerr << ansi::BOLD_RED << "error: " << ansi::RESET 
+                          << "date type cannot start with ." << std::endl;
+                return false;
+            }
+            return true;
+        }
     }
 }
