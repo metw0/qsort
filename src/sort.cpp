@@ -18,12 +18,13 @@ namespace sort {
         bool is_founded = false;
         for(const auto &file : files::directory_iterator(files::current_path())) {
             std::string file_name = file.path().filename().string();  
+            std::string short_file_name = file_name;
             
-            size_t pos = file_name.find_last_of('.');
-            file_name.erase(pos);
+            auto pos = short_file_name.find_last_of('.');
+            if(pos != std::string::npos) short_file_name.erase(pos);
 
             if(!files::is_regular_file(file.path()) || files::exists(path / file_name)) continue;
-            if(file_name.find(df) == std::string::npos) continue;
+            if(short_file_name.find(df) == std::string::npos) continue;
 
             is_founded = true;
             files::rename(file.path(), path / file_name);
